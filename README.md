@@ -1,6 +1,6 @@
- # Installing admin section 
+ # WR Admin installer 
 
-##### FOR LARAVEL 8 
+##### LARAVEL 8 
 
 ----------------------------------
 #### 1. Create Laravel project with:
