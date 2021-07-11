@@ -3,35 +3,37 @@
 ##### LARAVEL 8 
 
 ----------------------------------
-#### 1. Create Laravel project with:
+#### 1. Create Laravel project and install Breeze:
 
-    composer create-project laravel/laravel domain.com
+Optional: Below is a long command that does all of step 1's commands in single line, just change the siteAlias varaible below with whatever you need to call your new Laravel project, note that sometimes it gets stuck for about 1 minute, just let it do it's thing:
 
-----------------------------------
-#### 2. Follow the steps here in order:
+    siteAlias=mynewsite.com; composer create-project laravel/laravel $siteAlias && cd $siteAlias && composer require laravel/breeze --dev && php artisan breeze:install && npm install && npm run dev
+
+Or you can do each step 1 at a time
+
+    composer create-project laravel/laravel mynewsite.com
+    cd mynewsite.com
     composer require laravel/breeze --dev
     php artisan breeze:install
     npm install
     npm run dev
 
-Optional: If you like all these can be run on a single line, just change the two instances of 'domain.com' below with the site alias, note that sometimes it gets stuck for about 1 minute, just let it do it's thing:
-
-    composer create-project laravel/laravel domain.com && cd domain.com && composer require laravel/breeze --dev && php artisan breeze:install && npm install && npm run dev
-
 ----------------------------------
-#### 3. Create a database, and setup .env with connection details
+#### 2. Create a database, and setup .env with connection details
 
 Create a database locally or a server and modify the route .env file with the new details
 
 ----------------------------------
-#### 4. Copy premade content
+#### 3. Copy premade content
 
-Copy everything from this ADMIN INSTALLATION directory other than this text file into new site
-Delete '/resources/views/dashboard.blade.php'
+ - Copy everything from this ADMIN INSTALLATION directory other than this text file into the new Laravel site route
+ - Delete '/resources/views/dashboard.blade.php'
 
 ----------------------------------
-#### 5. Migrate database
-php artisan migrate
+#### 4. Migrate database
+
+    php artisan migrate
+
 (This includes two new fields added to the create_users_table migration)
 
 ----------------------------------
