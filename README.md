@@ -80,7 +80,7 @@ $DirToLaravelApplication variable to point to the laravel installation, effectiv
 of the above:
 
     $DirToLaravelApplication = '/../'; // This is for a default Laravel installation where public is within the same directory
-    $DirToLaravelApplication = '/../mynewsite.com'; // This is if Laravel has a seperate directory one level below public
+    $DirToLaravelApplication = '/../laravel-application/'; // This is if Laravel has a seperate directory one level below public
 
 NOTE: All of this can be done just before deployment, but may aswell do straight away so you are working with the same structure.
 
