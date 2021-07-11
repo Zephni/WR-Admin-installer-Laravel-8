@@ -69,11 +69,14 @@ Go to /App/Providers/AppServiceProvider.php and add this to register()
 Now open /server.php and replace all instances from /public to /../public_html
 
     '/public'
+    // Change to
     '/../public_html'
 
-Also within the public/index.php or public_html/index.php file find and edit the
+Finally within the public/index.php or public_html/index.php file find and edit the
 $DirToLaravelApplication turnery condition with the live domain of the website, plus update the
-second value which is the live path of the laravel directory. Further instruction within index.php
+local / live values so they match the environments pathing. Further instruction within index.php comments
+
+NOTE: All of this can be done just before deployment, but may aswell do straight away so you are working with the same structure
 
 ----------------------------------
 #### 8. Main set up, now it's time to:
@@ -81,5 +84,3 @@ second value which is the live path of the laravel directory. Further instructio
   - Copy the DBModelTemplate.php Model and modify for created tables
   - Edit AdminController.php and set up the navigation
   - Read the built in documentation for detailed help
-  
-NOTE: This can be done just before deployment, but may aswell do straight away
