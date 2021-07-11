@@ -76,14 +76,11 @@ Now open /server.php and replace all instances from '/public' to '/../public_htm
     '/../public_html' // Of course change this depending on your environment
 
 Finally within the public/index.php or public_html/index.php file find and edit the
-$DirToLaravelApplication variable which acts as a reverse of the above. Change 'livedomain.com' to
-the domain that the live site will be accesibile through, this way index.php can decide where to find the
-laravel application directory depending on the environment, customise the below to suit your set up.
+$DirToLaravelApplication variable to point to the laravel installation, effectively the reverse
+of the above:
 
-    /* public_html/index.php */
-    $DirToLaravelApplication = ($_SERVER['HTTP_HOST'] != 'livedomain.com')
-        ? '/../' // Local
-        : '/../laravel-application/'; // Live
+    $DirToLaravelApplication = '/../'; // This is for a default Laravel installation where public is within the same directory
+    $DirToLaravelApplication = '/../mynewsite.com'; // This is if Laravel has a seperate directory one level below public
 
 NOTE: All of this can be done just before deployment, but may aswell do straight away so you are working with the same structure.
 

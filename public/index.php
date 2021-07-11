@@ -1,18 +1,7 @@
 <?php
 
-/*
-    $DirToLaravelApplication should reference the root laravel directory,
-    first set what the live domain will be in the clause so we can decide which path to use
-    
-    For local default laravel install:
-        '/../'
-    
-    For Cpanel, route one directory back from public_html/ and reference the laravel directory:
-        '/../laravel-application/'
-*/
-$DirToLaravelApplication = ($_SERVER['HTTP_HOST'] != 'livedomain.com')
-    ? '/../'
-    : '/../laravel-application/';
+// $DirToLaravelApplication should reference the root laravel directory from public
+$DirToLaravelApplication = '/../';
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
