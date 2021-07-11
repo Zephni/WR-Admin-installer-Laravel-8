@@ -21,12 +21,12 @@ Or you can do each step 1 at a time
 ----------------------------------
 #### 2. Create a database, and setup .env with connection details
 
-Create a database locally or a server and modify the route .env file with the new details
+Create a database locally or on a server and modify the route .env file with the new connection details.
 
 ----------------------------------
 #### 3. Copy premade content
 
- - Copy everything from this ADMIN INSTALLATION directory other than this text file into the new Laravel site route
+ - Copy everything from this directory other than this README.md file into the new Laravel site route.
  - Delete '/resources/views/dashboard.blade.php'
 
 ----------------------------------
@@ -43,11 +43,11 @@ Start tinker mode
 
     php artisan tinker
     
-Create the createUser function
+Temporarily create the createUser function
 
     function createUser($name, $email, $password, $isAdmin = false){$user = new App\Models\User();$user->name = $name;$user->email = $email;$user->password = Hash::make($password);$user->is_admin = (!$isAdmin) ? 0 : 1;return $user->save();}
 
-Run the createUser function, but replace the values appropriately, the 4th parameter is a boolean that determines whether the new user is an admin
+Run the createUser function and replace the string values appropriately, the 4th parameter is a boolean that determines whether the new user is an admin
 
     createUser('NAME', 'EMAIL_ADDRESS', 'PASSWORD', 1);
 
@@ -58,7 +58,11 @@ Run the createUser function, but replace the values appropriately, the 4th param
 
 #### 7: OPTIONAL - Will live have /public in a different location?
 
-If you plan to have the public folder in a different location like "/../public_html"
+If you plan to have the public folder in a different location like '/../public_html' we can set up
+our dev environment with the same structure. They can both be different if need be and either have
+different sets of files on each (the ones below), or set up conditions to check the .env APP_ENV
+setting to switch on the fly, but it can simplify things to just keep it all the same structure.
+
 Go to /App/Providers/AppServiceProvider.php and add this to register()
 
     // set the public path to this directory
@@ -66,17 +70,22 @@ Go to /App/Providers/AppServiceProvider.php and add this to register()
         return base_path().'/../public_html';
     });
  
-Now open /server.php and replace all instances from /public to /../public_html
+Now open /server.php and replace all instances from '/public' to '/../public_html'
 
     '/public'
-    // Change to
-    '/../public_html'
+    '/../public_html' // Of course change this depending on your environment
 
 Finally within the public/index.php or public_html/index.php file find and edit the
-$DirToLaravelApplication turnery condition with the live domain of the website, plus update the
-local / live values so they match the environments pathing. Further instruction within index.php comments
+$DirToLaravelApplication variable which acts as a reverse of the above. Change 'livedomain.com' to
+the domain that the live site will be accesibile through, this way index.php can decide where to find the
+laravel application directory depending on the environment, customise the below to suit your set up.
 
-NOTE: All of this can be done just before deployment, but may aswell do straight away so you are working with the same structure
+    /* public_html/index.php */
+    $DirToLaravelApplication = ($_SERVER['HTTP_HOST'] != 'livedomain.com')
+        ? '/../' // Local
+        : '/../laravel-application/'; // Live
+
+NOTE: All of this can be done just before deployment, but may aswell do straight away so you are working with the same structure.
 
 ----------------------------------
 #### 8. Main set up, now it's time to:
