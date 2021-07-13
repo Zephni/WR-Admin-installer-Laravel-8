@@ -72,7 +72,7 @@ Note that when adding a field or making any change after the inital creation mig
 -------------
 ### Running &amp; rolling back migrations
 
-To run a migration simple run the following artisan command:
+To run a migration simply run the following artisan command:
 
 <kbd>php artisan migrate</kbd>
 

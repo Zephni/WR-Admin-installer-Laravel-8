@@ -37,15 +37,15 @@ Below are some examples of $tableFieldsEdit fields, currently these are used for
     <table>
         <tr>
             <td>'author'</td>
-            <td>&nbsp;=&gt; ['type' => 'select',  'options' => 'join Author name'];</td>
+            <td>&nbsp;=&gt; ['type' => 'select',  'options' => 'join Author name'],</td>
         </tr>
         <tr>
             <td>'category'</td>
-            <td>&nbsp;=&gt; ['type' => 'select',  'options' => 'join Category title'];</td>
+            <td>&nbsp;=&gt; ['type' => 'select',  'options' => 'join Category title'],</td>
         </tr>
         <tr>
             <td>'title'</td>
-            <td>&nbsp;=&gt; ['type' => 'text', 'validation' => 'required|between:5,70', 'help' => 'Title should be between 5 and 70 characters'];</td>
+            <td>&nbsp;=&gt; ['type' => 'text', 'validation' => 'required|between:5,70', 'help' => 'Title should be between 5 and 70 characters'],</td>
         </tr>
         <tr>
             <td>'content'</td>
@@ -53,19 +53,19 @@ Below are some examples of $tableFieldsEdit fields, currently these are used for
         </tr>
         <tr>
             <td>'image'</td>
-            <td>&nbsp;=&gt; ['type' => 'image', 'previewType' => 'landscape', 'path' => 'news', 'validation' => 'required|image|mimes:jpeg,jpg|max:256';</td>
+            <td>&nbsp;=&gt; ['type' => 'image', 'previewType' => 'landscape', 'path' => 'news', 'validation' => 'required|image|mimes:jpeg,jpg|max:256'],</td>
         </tr>
         <tr>
             <td>'publish_date'</td>
-            <td>&nbsp;=&gt; ['type' => 'datetime'];</td>
+            <td>&nbsp;=&gt; ['type' => 'datetime'],</td>
         </tr>
         <tr>
             <td>'tags'</td>
-            <td>&nbsp;=&gt; ['type' => 'tags'];</td>
+            <td>&nbsp;=&gt; ['type' => 'tags'],</td>
         </tr>
         <tr>
             <td>'live'</td>
-            <td>&nbsp;=&gt; ['type' => 'select', 'options' => ['1' => 'Yes', '0' => 'No'], 'default' => '1;</td>
+            <td>&nbsp;=&gt; ['type' => 'select', 'options' => ['1' => 'Yes', '0' => 'No'], 'default' => '1],</td>
         </tr>
     </table>
 </kbd>
