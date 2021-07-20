@@ -1,26 +1,12 @@
 ## <i class="fas fa-sitemap mr-1"></i> Navigation
 -------------
 
-To modify the navigation panel, first open and edit the /app/Http/Controllers/AdminController.php controller
+To modify the navigation panel, open and edit the <kbd>/app/Config/AdminNavigation.php</kbd> file
 
 -------------
-### What to edit
+### Editing AdminNavigation.php
 
-Within AdminController.php, the first preset property is a static one named $navigation:
-
-<kbd>public static $navigation = null;</kbd>
-
-This is not to be edited, but rather set within the private buildNavigation() method below it:
-
-<kbd>private function buildNavigation(){<br />
-&nbsp;&nbsp;&nbsp;&nbsp;AdminController::$navigation = [<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
-</kbd>
-
-buildNavigation() is called at the begining of every view method within the admin section, this practice should be continued with any new views that require navigation.
-We are working within a method so we can call other objects, methods and properties into our navigation.
-
-The AdminController::$navigation static property must be set within the buildNavigation() method, this must be a key value array that follows this pattern:
+This file must return a key value array that follows this pattern:
 
 <kbd>'Dashboard' => ['icon' => 'fa-gem', 'url' => route('admin')]</kbd>
 
@@ -56,30 +42,28 @@ By using all of the above tools it allows you to create a very rubust navigation
 -------------
 ### Quick example of navigation method and contents
 
-Below is a practical example of how navigation may be set up within AdminController.php:
+Below is a practical example of how navigation may be set up within AdminNavigation.php:
 
 <kbd>
-private function buildNavigation(){<br />
-&nbsp;&nbsp;&nbsp;&nbsp;AdminController::$navigation = [<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Dashboard'             => ['icon' => 'fa-gem',      'url' => route('admin')],<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Documentation'         => ['icon' => 'fa-question', 'url' => route('admin-documentation')],<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Content Management',<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Pages' => [<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'icon'           => 'fa-file-alt',        'url' => route('admin-browse', ['table' => 'pages']),<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'submenu' => [<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Create new' => ['icon' => 'fa-plus', 'url' => route('admin-create', ['table' => 'pages'])],<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Browse'     => ['icon' => 'fa-eye',  'url' => route('admin-browse', ['table' => 'pages'])]<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\App\Classes\Helper::properize(Auth::user()->name).' profile',<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Manage account'       => ['icon' => 'fa-user-edit', 'url' => route('admin-manage-account')],<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<br />
-&nbsp;&nbsp;&nbsp;&nbsp;    ];<br />
-}<br />
+return [<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;'Dashboard'             => ['icon' => 'fa-gem',      'url' => route('admin')],<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;'Documentation'         => ['icon' => 'fa-question', 'url' => route('admin-documentation')],<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;'Content Management',<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;'Pages' => [<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'icon'           => 'fa-file-alt',        'url' => route('admin-browse', ['table' => 'pages']),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'submenu' => [<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Create new' => ['icon' => 'fa-plus', 'url' => route('admin-create', ['table' => 'pages'])],<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Browse'     => ['icon' => 'fa-eye',  'url' => route('admin-browse', ['table' => 'pages'])]<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br />
+&nbsp;&nbsp;&nbsp;&nbsp;],<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;\App\Classes\Helper::properize(Auth::user()->name).' profile',<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;'Manage account'       => ['icon' => 'fa-user-edit', 'url' => route('admin-manage-account')],<br />
+<br />
+];<br />
 </kbd>

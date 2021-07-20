@@ -11,44 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    /*
-        MAKE SURE TO SET UP NAVIGATION WITHIN THE buildNavigation() METHOD BELOW
-    */
     public static $navigation = null;
-
-    private function buildNavigation(){
-        AdminController::$navigation = [
-
-            'Dashboard'             => ['icon' => 'fa-gem',      'url' => route('admin')],
-    
-            'Documentation'         => ['icon' => 'fa-question', 'url' => route('admin-documentation')],
-    
-            'Content Management',
-    
-            //'News articles' => [
-            //    'icon'           => 'fa-newspaper',       'url' => route('admin-browse', ['table' => 'news']),
-            //    'submenu' => [
-            //        'Create new' => ['icon' => 'fa-plus', 'url' => route('admin-create', ['table' => 'news'])],
-            //        'Browse'     => ['icon' => 'fa-eye',  'url' => route('admin-browse', ['table' => 'news'])],
-            //        'Authors'    => ['icon' => 'fa-book', 'url' => route('admin-browse', ['table' => 'authors'])],
-            //        'Categories' => ['icon' => 'fa-list', 'url' => route('admin-browse', ['table' => 'categories'])],
-            //    ]
-            //],
-    
-            //'Pages' => [
-            //    'icon'           => 'fa-file-alt',        'url' => route('admin-browse', ['table' => 'pages']),
-            //    'submenu' => [
-            //        'Create new' => ['icon' => 'fa-plus', 'url' => route('admin-create', ['table' => 'pages'])],
-            //        'Browse'     => ['icon' => 'fa-eye',  'url' => route('admin-browse', ['table' => 'pages'])]
-            //    ]
-            //],
-    
-            \App\Classes\Helper::properize(Auth::user()->name).' profile',
-    
-            'Manage account'       => ['icon' => 'fa-user-edit', 'url' => route('admin-manage-account')],
-
-        ];
-    }
     
     public function __construct()
     {
@@ -56,14 +19,14 @@ class AdminController extends Controller
         $this->middleware('is_admin');
     }
 
-    private function selfSetup()
+    public function viewSetup()
     {
-        $this->buildNavigation();
+        AdminController::$navigation = include(app_path().'/Config/AdminNavigation.php');
     }
 
     public function index()
     {
-        $this->selfSetup();
+        $this->viewSetup();
         return view('admin/index', []);
     }
 
@@ -75,7 +38,8 @@ class AdminController extends Controller
      */
     public function browse($table, Request $request)
     {
-        $this->selfSetup();
+        $this->viewSetup();
+
         $modelRef = self::getModelRef($table);
         
         if($modelRef == false || !isset($modelRef::$adminCanBrowse) || $modelRef::$adminCanBrowse != true)
@@ -182,7 +146,8 @@ class AdminController extends Controller
      */
     public function create(string $table) : View
     {
-        $this->selfSetup();
+        $this->viewSetup();
+
         $modelRef = self::getModelRef($table);
 
         if($modelRef == false || !isset($modelRef::$adminCanEdit) || $modelRef::$adminCanEdit != true)
@@ -209,7 +174,8 @@ class AdminController extends Controller
     */
     public function createAction(Request $request)
     {
-        $this->selfSetup();
+        $this->viewSetup();
+
         $modelRef = $request->modelRef;
         $ufields = $this->getUDataFromRequest($request);
 
@@ -260,7 +226,8 @@ class AdminController extends Controller
     */
     public function edit(string $table, int $id) : View
     {
-        $this->selfSetup();
+        $this->viewSetup();
+
         $modelRef = self::getModelRef($table);
 
         if($modelRef == false || !isset($modelRef::$adminCanEdit) || $modelRef::$adminCanEdit != true)
@@ -290,7 +257,8 @@ class AdminController extends Controller
     */
     public function editAction(Request $request)
     {
-        $this->selfSetup();
+        $this->viewSetup();
+
         $modelRef = $request->modelRef;
         $ufields = $this->getUDataFromRequest($request);
         
@@ -356,7 +324,8 @@ class AdminController extends Controller
     */
     public function deleteAction(Request $request)
     {
-        $this->selfSetup();
+        $this->viewSetup();
+
         $modelRef = $request->modelRef;
         
         $deleteInstance = $modelRef::where('id', $request->deleteID);
@@ -390,7 +359,8 @@ class AdminController extends Controller
     */
     public function manageAccount ($overideID = null) : View
     {
-        $this->selfSetup();
+        $this->viewSetup();
+
         $modelRef = self::getModelRef('User');
         $table = 'users';
 
@@ -419,7 +389,8 @@ class AdminController extends Controller
     */
     public function manageAccountAction(Request $request)
     {
-        $this->selfSetup();
+        $this->viewSetup();
+
         $id = Auth::user()->id;
         $ufields = $this->getUDataFromRequest($request);
 
@@ -487,7 +458,8 @@ class AdminController extends Controller
 
     public function documentation($subject = '')
     {
-        $this->selfSetup();
+        $this->viewSetup();
+        
         if($subject == '')
         {
             $content = view('/admin/documentation/index');
