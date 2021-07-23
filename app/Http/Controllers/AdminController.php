@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Classes\Helper;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -21,7 +22,7 @@ class AdminController extends Controller
 
     public function viewSetup()
     {
-        AdminController::$navigation = include(app_path().'/Config/AdminNavigation.php');
+        AdminController::$navigation = Helper::GetConfig('AdminNavigation');
     }
 
     public function index()

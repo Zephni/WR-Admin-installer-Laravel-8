@@ -42,5 +42,28 @@ class Helper
             
             return $result->success;
         }
+
+        /* CONFIG
+        -----------------------------------*/
+        private static $config = [];
+
+        public static function GetConfig($name, $key = null)
+        {
+            $configFilePath = app_path().'/Config/'.$name.'.php';
+            
+            if(!isset(Helper::$config[$name]))
+            {
+                if(file_exists($configFilePath))
+                {
+                    Helper::$config[$name] = include($configFilePath);
+                }
+                else
+                {
+                    die('Failed to find "'.$configFilePath.'" config');
+                }
+            }
+
+            return ($key === null) ? Helper::$config[$name] : Helper::$config[$name][$key];
+        }
     }
 ?>

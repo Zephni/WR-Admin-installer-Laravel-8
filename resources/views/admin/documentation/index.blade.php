@@ -10,3 +10,5 @@
 <i class="fas fa-database mr-2"></i> [Tables &amp; migrations](/admin/documentation/migrations) - Creating new tables and managing migrations
 
 <i class="fas fa-cubes mr-2"></i> [Models](/admin/documentation/models) - Manipulate a model with properties and methods to control how an admin can interface with it
+
+<i class="fas fa-cog mr-2"></i> [Helper class](/admin/documentation/helper) - Use the Helper class to speed up and simplify development

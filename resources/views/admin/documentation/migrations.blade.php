@@ -1,4 +1,4 @@
-## <i class="fas fa-sitemap mr-1"></i> Tables &amp; Migrations
+## <i class="fas fa-database mr-1"></i> Tables &amp; Migrations
 -------------
 
 Creating &amp; modifying tables can be made much easier and managable with migrations, following this design pattern can save headaches in the future.
@@ -72,7 +72,7 @@ Note that when adding a field or making any change after the inital creation mig
 -------------
 ### Running &amp; rolling back migrations
 
-To run a migration simply run the following artisan command:
+To run a migration simple run the following artisan command:
 
 <kbd>php artisan migrate</kbd>
 
