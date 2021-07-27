@@ -64,7 +64,11 @@
                     <tr>
 
                         @foreach ($tableFields as $fieldKey => $fieldAlias)
-                            <th scope="col">{{ $fieldAlias }}</th>
+                            <th scope="col">
+                                <a href="{{ \App\Helper::urlAppendKV(url()->full(), ['orderby' => $fieldKey, 'order' => (request()->get('orderby') != $fieldKey || request()->get('order') != 'asc') ? 'asc' : 'desc']) }}" class="text-light">
+                                    {{ $fieldAlias }}
+                                </a>
+                            </th>
                         @endforeach
 
                         {{-- Button group column --}}
@@ -76,15 +80,20 @@
 
                     @foreach ($collection as $item)
                         <tr>
+
                             @foreach ($tableFields as $fieldKey => $fieldAlias)
                                 @if(array_key_exists($fieldKey, $joinFields))
-                                    <?php $relationshipName = $joinFields[$fieldKey]; ?>
-                                    <td class="align-middle">{{ (is_object($item->$fieldKey)) ? $item->$fieldKey->$relationshipName : ' - not set - ' }}</td>
+                                    @php
+                                        $relationshipName = $joinFields[$fieldKey];
+                                        $fieldHTML = (is_object($item->$fieldKey)) ? $item->$fieldKey->$relationshipName : ' - not set - ';
+                                    @endphp
                                 @elseif(array_key_exists($fieldKey, $selectFieldData))
-                                    <td class="align-middle">{{ $selectFieldData[$fieldKey][$item->$fieldKey] }}</td>
+                                    @php $fieldHTML = $selectFieldData[$fieldKey][$item->$fieldKey]; @endphp
                                 @else
-                                    <td class="align-middle">{{ $item->$fieldKey }}</td>
+                                    @php $fieldHTML = $item->$fieldKey; @endphp
                                 @endif
+
+                                <td class="align-middle">{{ $fieldHTML }}</td>
                             @endforeach
                         
                             <td class="text-right">

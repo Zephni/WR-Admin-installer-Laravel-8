@@ -49,7 +49,12 @@ class AdminController extends Controller
         if(isset($modelRef::$protected) && $modelRef::$protected == 'zephni' && auth()->user()->id != 1)
             return back();
         
+        // Default ordering
         $orderBy = $modelRef::$orderBy ?? ['id', 'desc'];
+
+        // Custom ordering
+        if(request()->get('orderby')) $orderBy = [request()->get('orderby'), (request()->get('order') != 'asc') ? 'asc' : 'desc'];
+        
         $collection = $modelRef::orderBy($orderBy[0], $orderBy[1])->where(function($collection) use($request, $modelRef){
             // Search user query on all editable fields
             if($request->query('q')){

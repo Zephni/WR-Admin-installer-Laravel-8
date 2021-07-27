@@ -43,6 +43,30 @@ class Helper
             return $result->success;
         }
 
+        public static function urlAppendKV($url, $kvArray)
+        {
+            $parsedURL = parse_url($url);
+            $finalURL = '';
+
+            if(!array_key_exists('query', $parsedURL))
+            {
+                $finalURL = $url.'?'.http_build_query($kvArray);
+            }
+            else
+            {
+                $curQueryParams = [];
+                parse_str($parsedURL['query'], $curQueryParams);
+                foreach($kvArray as $k => $v)
+                {
+                    $curQueryParams[$k] = $v;
+                }
+                $newQueryString = http_build_query(array_reverse($curQueryParams, true));
+                $finalURL = strtok($url, '?').'?'.$newQueryString;
+            }
+
+            return $finalURL;
+        }
+        
         /* CONFIG
         -----------------------------------*/
         private static $config = [];
