@@ -59,3 +59,7 @@ Checks if $_COOKIE['laravel_cookie_consent'] is set and equal to true, returns f
 Checks recapcha response for Google ReCapcha, note that the Helper file must be edited to add the 'secret' for your application.
 
 <kbd>reCaptchaCheck($postedRecaptchaResponse)</kbd>
+
+Pass a key value array to append or modify query string parameters into a full url.
+
+<kbd>urlAppendKV($url, $kvArray)</kbd>
