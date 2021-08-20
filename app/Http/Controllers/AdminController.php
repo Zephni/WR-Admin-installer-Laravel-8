@@ -40,7 +40,7 @@ class AdminController extends Controller
     public function browse($table, Request $request)
     {
         $this->viewSetup();
-
+        
         $modelRef = self::getModelRef($table);
         
         if($modelRef == false || !isset($modelRef::$adminCanBrowse) || $modelRef::$adminCanBrowse != true)
@@ -49,12 +49,9 @@ class AdminController extends Controller
         if(isset($modelRef::$protected) && $modelRef::$protected == 'zephni' && auth()->user()->id != 1)
             return back();
         
-        // Default ordering
         $orderBy = $modelRef::$orderBy ?? ['id', 'desc'];
-
         // Custom ordering
         if(request()->get('orderby')) $orderBy = [request()->get('orderby'), (request()->get('order') != 'asc') ? 'asc' : 'desc'];
-        
         $collection = $modelRef::orderBy($orderBy[0], $orderBy[1])->where(function($collection) use($request, $modelRef){
             // Search user query on all editable fields
             if($request->query('q')){
@@ -69,10 +66,8 @@ class AdminController extends Controller
                 // Search relationships
                 if(isset($modelRef::$relationships)){
                     foreach($modelRef::$relationships as $relationship){
-                        $collection->orWhereHas($relationship, function($collectionRelation) use($modelRef, $userQuery, $relationship){
-                            $joinInfo = explode(' ', $modelRef::$tableFieldsEdit[$relationship]['options']);
-                            $joinFieldName = $joinInfo[2];
-                            $collectionRelation->where($joinFieldName, 'like', "%{$userQuery}%");
+                        $collection->orWhereHas($relationship, function($collectionRelation) use($userQuery){
+                            $collectionRelation->where('name', 'like', "%{$userQuery}%");
                         });
                     }
                 }
@@ -127,20 +122,47 @@ class AdminController extends Controller
 
             // If key is set as string eg. "Short name" => "really_long_field_name" then overwrite
             if(is_string($key))
+            {
                 $tableFields[$field] = $key;
+            }
+        }
+
+        // Display as HTML fields
+        $displayAsHTMLFields = (isset($modelRef::$displayAsHTMLFields)) ? $modelRef::$displayAsHTMLFields : [];
+
+        // Special collection content (supporting methods for field values, will run on every instance within collection)
+        // Add to $tableFieldsBrowse like so: 'Nice name' => 'method::MethodName'
+        $methodFields = [];
+        foreach($modelRef::$tableFieldsBrowse as $k => $v)
+        {
+            if(substr($v, 0, 8) === "method::"){
+                $methodFields[$k] = $v;
+                $displayAsHTMLFields[] = $k;
+
+                foreach($collection as $item)
+                {
+                    // Check method exists and run on each instance
+                    $method = explode('::', $v)[1];
+                    if(method_exists($modelRef, $method)){
+                        $item->$v = $item->$method();
+                    }
+                }
+            }
         }
 
         $information = $modelRef::$information ?? '';
         
         return view('admin/browse',  [
-            'modelRef'          => $modelRef,
-            'tableName'         => $table,
-            'tableAlias'        => $modelRef::$alias ?? self::PrettifyFieldName($table, true),
-            'tableFields'       => $tableFields,
-            'collection'        => $collection,
-            'joinFields'        => $joinFields,
-            'selectFieldData'   => $selectFieldData,
-            'information'       => $information
+            'modelRef'            => $modelRef,
+            'tableName'           => $table,
+            'tableAlias'          => $modelRef::$alias ?? self::PrettifyFieldName($table, true),
+            'tableFields'         => $tableFields,
+            'collection'          => $collection,
+            'joinFields'          => $joinFields,
+            'selectFieldData'     => $selectFieldData,
+            'methodFields'        => $methodFields,
+            'displayAsHTMLFields' => $displayAsHTMLFields,
+            'information'         => $information
         ]);
     }
 

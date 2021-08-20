@@ -65,8 +65,15 @@
 
                         @foreach ($tableFields as $fieldKey => $fieldAlias)
                             <th scope="col">
-                                <a href="{{ \App\Helper::urlAppendKV(url()->full(), ['orderby' => $fieldKey, 'order' => (request()->get('orderby') != $fieldKey || request()->get('order') != 'asc') ? 'asc' : 'desc']) }}" class="text-light">
+                                <a href="{{ \App\Classes\Helper::urlAppendKV(url()->full(), ['orderby' => $fieldKey, 'order' => (request()->get('orderby') != $fieldKey || request()->get('order') != 'asc') ? 'asc' : 'desc']) }}" class="text-light">
                                     {{ $fieldAlias }}
+                                    @if(request()->get('orderby') == $fieldKey)
+                                        @if(request()->get('order') == 'asc')
+                                            <i class="fas fa-arrow-up"></i>
+                                        @elseif(request()->get('order') == 'desc')
+                                            <i class="fas fa-arrow-down"></i>
+                                        @endif
+                                    @endif
                                 </a>
                             </th>
                         @endforeach
@@ -89,11 +96,17 @@
                                     @endphp
                                 @elseif(array_key_exists($fieldKey, $selectFieldData))
                                     @php $fieldHTML = $selectFieldData[$fieldKey][$item->$fieldKey]; @endphp
+                                @elseif(array_key_exists($fieldAlias, $methodFields))
+                                    @php $fieldHTML = $item->$fieldKey; @endphp
                                 @else
                                     @php $fieldHTML = $item->$fieldKey; @endphp
                                 @endif
 
-                                <td class="align-middle">{{ $fieldHTML }}</td>
+                                @if(in_array($fieldAlias, $displayAsHTMLFields))
+                                    <td class="align-middle">{!! $fieldHTML !!}</td>
+                                @else
+                                    <td class="align-middle">{{ $fieldHTML }}</td>
+                                @endif
                             @endforeach
                         
                             <td class="text-right">

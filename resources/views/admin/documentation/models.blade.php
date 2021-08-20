@@ -16,9 +16,21 @@ To set an alias for the table for user display use:
 
 <kbd>$alias = 'Model name';</kbd>
 
-To determine what fields show when browsing use an array:
+To determine what fields show when browsing use an array (note you can override the display name with a key):
 
-<kbd>$tableFieldsBrowse = ['title', 'publish_date'...];</kbd>
+<kbd>$tableFieldsBrowse = ['title', 'publish_date', 'Custom name' => 'field_name', ...];</kbd>
+
+To add a custom field to show while browsing you can call local method which will return HTML to display in the row:
+
+<kbd>$tableFieldsBrowse = ['title', 'publish_date', 'Is live' => 'method::IsLive'];</kbd>
+
+To order by a specific field use:
+
+<kbd>$orderBy = ['publish_date', 'desc'];</kbd>
+
+To allow certain field values to display raw HTML on the browse page use:
+
+<kbd>$displayAsHTMLFields = ['field_name', ...]</kbd>
 
 To display information to the user regarding the table you can choose to add some information:
 

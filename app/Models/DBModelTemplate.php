@@ -19,6 +19,9 @@ class DBModelTemplate extends Model
     // DB real table name
     protected $table = 'table_name';
 
+    // Table alias
+    // public static $alias = 'Table name';
+
     // Add fields that should not be mass asigned to $guarded
     protected $guarded = [];
 
@@ -47,6 +50,9 @@ class DBModelTemplate extends Model
     // Specify a field and direction for this model's rows while browsing eg ['field_name', 'asc']
     public static $orderBy = ['publish_date', 'desc'];
 
+    // An array of fields which are allowed to be displayed as HTML when browsing
+    public static $displayAsHTMLFields = [];
+
     // HTML text information to be displayed for this model at the top of the browsing page
     public static $information = '';
     
@@ -62,6 +68,7 @@ class DBModelTemplate extends Model
         //'title'         => ['type' => 'text', 'validation' => 'required|between:5,70', 'help' => 'Title should be between 5 and 70 characters'],
         //'content'       => ['type' => 'wysiwyg'],
         //'image'         => ['type' => 'image', 'previewType' => 'landscape', 'path' => 'news', 'validation' => 'required|image|mimes:jpeg,jpg|max:256', 'help' => 'Image should be a valid JPG, 700 x 400 in size, no larger than 256kb' /*, 'alert' => '<b>New!</b> Please make sure to save images as jpg\'s from now on before uploading <i class="fas fa-thumbs-up"></i>'*/],
+        //'-html'         => '<hr /><h2>Some example HTML</h2>',
         //'tags'          => ['type' => 'tags'],
         //'publish_date'  => ['type' => 'datetime'],
         //'live'          => ['type' => 'select', 'options' => ['1' => 'Yes', '0' => 'No'], 'default' => '1'],
