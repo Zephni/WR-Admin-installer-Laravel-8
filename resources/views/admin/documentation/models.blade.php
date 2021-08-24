@@ -12,6 +12,10 @@ Models that can be created / edited and browsed must have the 2 following static
 -------------
 ### Browsing and basic model setup properties
 
+With each editable Model you must set the table property to the related database table_name, eg:
+
+<kbd>$table = 'table_name';</kbd>
+
 To set an alias for the table for user display use:
 
 <kbd>$alias = 'Model name';</kbd>
