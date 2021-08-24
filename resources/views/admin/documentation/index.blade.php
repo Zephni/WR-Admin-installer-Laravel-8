@@ -11,4 +11,6 @@
 
 <i class="fas fa-cubes mr-2"></i> [Models](/admin/documentation/models) - Manipulate a model with properties and methods to control how an admin can interface with it
 
-<i class="fas fa-cog mr-2"></i> [Helper class](/admin/documentation/helper) - Use the Helper class to speed up and simplify development
+<i class="fas fa-hands-helping mr-2"></i> [Helper class](/admin/documentation/helper) - Use the Helper class to speed up and simplify development
+
+<i class="fas fa-cog mr-2"></i> [Commands](/admin/documentation/commands) - Allow the user to run specified Artisan commands from the admin section

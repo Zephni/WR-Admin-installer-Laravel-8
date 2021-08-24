@@ -26,12 +26,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_admin']], functi
     Route::get('/edit/{table}/{id}',        [App\Http\Controllers\AdminController::class, 'edit'])->name("admin-edit");
     Route::get('/manage-account',           [App\Http\Controllers\AdminController::class, 'manageAccount'])->name("admin-manage-account");
     Route::get('/documentation/{subject?}', [App\Http\Controllers\AdminController::class, 'documentation'])->name("admin-documentation");
+    Route::get('/commands',                 [App\Http\Controllers\AdminController::class, 'commands'])->name("admin-commands");
     
     Route::post('/create/{table}/action',   [App\Http\Controllers\AdminController::class, 'createAction'])->name("admin-create-action");
     Route::post('/edit/{table}/{id}/action',[App\Http\Controllers\AdminController::class, 'editAction'])->name("admin-edit-action");
     Route::post('/delete',                  [App\Http\Controllers\AdminController::class, 'deleteAction'])->name("admin-delete-action");
     Route::post('/wysiwyg-upload',          [App\Http\Controllers\AdminController::class, 'wysiwygUpload'])->name("wysiwyg-upload");
     Route::post('/manage-account-action',   [App\Http\Controllers\AdminController::class, 'manageAccountAction'])->name("admin-manage-account-action");
+    Route::post('/command-run',             [App\Http\Controllers\AdminController::class, 'commandRun'])->name("admin-command-run");
 });
 
 require __DIR__.'/auth.php';

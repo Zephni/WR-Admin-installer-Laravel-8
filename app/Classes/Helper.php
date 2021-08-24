@@ -1,9 +1,9 @@
 <?php
     namespace App\Classes;
 
-use Carbon\Carbon;
+    use Carbon\Carbon;
 
-class Helper
+    class Helper
     {
         public static function properize($string)
         {
@@ -71,7 +71,7 @@ class Helper
         -----------------------------------*/
         private static $config = [];
 
-        public static function GetConfig($name, $key = null)
+        public static function getConfig($name, $key = null)
         {
             $configFilePath = app_path().'/Config/'.$name.'.php';
             

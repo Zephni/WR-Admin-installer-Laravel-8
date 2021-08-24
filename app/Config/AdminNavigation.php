@@ -8,6 +8,8 @@
 
         'Documentation'         => ['icon' => 'fa-question', 'url' => route('admin-documentation')],
 
+        'Commands'              => ['icon' => 'fa-cog', 'url' => route('admin-commands')],
+
         'Content Management',
 
         //'News articles' => [

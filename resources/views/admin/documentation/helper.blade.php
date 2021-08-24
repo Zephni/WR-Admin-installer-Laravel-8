@@ -1,4 +1,4 @@
-## <i class="fas fa-cog mr-1"></i> Helper class
+## <i class="fas fa-hands-helping mr-1"></i> Helper class
 -------------
 
 The Helper class exists here <kbd>/app/Classes/Helper.php</kbd> and gives the developer a list of handy common methods to speed
@@ -30,13 +30,13 @@ Now you can call the entire array or retrieve a single value from a key using th
 
 // Retrieve the entire array
 
-<kbd>Helper::GetConfig('MyCustomConfig');</kbd>
+<kbd>Helper::getConfig('MyCustomConfig');</kbd>
 
 // Retrieve a single key
 
-<kbd>Helper::GetConfig('MyCustomConfig', 'SomeKey');</kbd>
+<kbd>Helper::getConfig('MyCustomConfig', 'SomeKey');</kbd>
 
-As soon as GetConfig() is called to retrieve a config file it is stored statically within so it no longer needs to import the
+As soon as getConfig() is called to retrieve a config file it is stored statically within so it no longer needs to import the
 file, meaning any keys can be pulled from it as many times as needed without unecessary importing.
 
 &nbsp;

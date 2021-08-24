@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Artisan;
 
 class AdminController extends Controller
 {
@@ -22,13 +23,76 @@ class AdminController extends Controller
 
     public function viewSetup()
     {
-        AdminController::$navigation = Helper::GetConfig('AdminNavigation');
+        AdminController::$navigation = Helper::getConfig('AdminNavigation');
     }
 
     public function index()
     {
         $this->viewSetup();
         return view('admin/index', []);
+    }
+
+    public function commands()
+    {
+        $this->viewSetup();
+
+        // Array we expect to be building, to look like: ['command:somecommand', 'command:anothercommand',...]
+        $commandsArray = [];
+
+        try
+        {
+            Artisan::call('list --raw');
+            $commandList = Artisan::output();
+            $seperatedCommandLines = explode("\n", $commandList);
+            $seperatedCommandLines = array_filter($seperatedCommandLines);
+            
+            foreach($seperatedCommandLines as $command)
+            {
+                $keyValue = explode(' ', $command, 2);
+                $keyValue[0] = trim($keyValue[0]);
+                $keyValue[1] = trim($keyValue[1]);
+                
+                $beginsWithAllowedWildcard = self::checkWildcard($keyValue[0], \App\Classes\Helper::getConfig('UserRunnableCommands'));
+
+                if(!$beginsWithAllowedWildcard)
+                    continue;
+
+                $commandsArray[$keyValue[0]] = $keyValue[1];
+            }
+        }
+        catch(Exception $e)
+        {
+            die('Error listing commands: '.$e->getMessage());
+        }
+
+        return view('admin/commands',  [
+            'commands' => $commandsArray
+        ]);
+    }
+
+    public function commandRun(Request $request)
+    {
+        $command = $request->get('command');
+
+        // Check that the command parameter is set
+        if($command === null || $command === false)
+            die('In AdminController->commandRun(), $request->get(\'command\') must be set.<br /><br />The post parameter \'command\' was not present.'); 
+
+        // Check that command is allowed to be run by user otherwise a user could run anything :O
+        if(!self::checkWildcard($command, \App\Classes\Helper::getConfig('UserRunnableCommands')))
+           die('In AdminController->commandRun(), $request->get(\'command\') must be present in the /app/Config/UserRunnableCommands.php array"<br /><br />Attempted to run: '.$command);
+        
+        // Check that the command actually exists in the Artisan list of available commands
+        if(!array_key_exists($command, Artisan::all()))
+            die('In AdminController->commandRun(), $request->get(\'command\') does not exist as a valid Artisan command.<br /><br />Attempted to run: '.$command);
+
+        // Call the command and get the output
+        Artisan::call($command);
+        $output = Artisan::output();
+        $output = Str::replace("\n", "<br/>", $output);
+        $output = Str::replace("  ", "&nbsp;&nbsp;", $output);
+        
+        return $output;
     }
 
     /**
@@ -619,5 +683,21 @@ class AdminController extends Controller
         }
 
         return $tableFields;
+    }
+
+    private static function checkWildcard($needle, $haystack)
+    {
+        $commandAllowed = false;
+
+        foreach($haystack as $commandWildcard)
+        {
+            if(Str::is($commandWildcard, $needle))
+            {
+                $commandAllowed = true;
+                break;
+            }
+        }
+
+        return $commandAllowed;
     }
 }
