@@ -194,6 +194,9 @@ class AdminController extends Controller
         // Display as HTML fields
         $displayAsHTMLFields = (isset($modelRef::$displayAsHTMLFields)) ? $modelRef::$displayAsHTMLFields : [];
 
+        // Display as image fields
+        $displayAsImageFields = $modelRef::$displayAsImageFields ?? [];
+
         // Special collection content (supporting methods for field values, will run on every instance within collection)
         // Add to $tableFieldsBrowse like so: 'Nice name' => 'method::MethodName'
         $methodFields = [];
@@ -217,16 +220,17 @@ class AdminController extends Controller
         $information = $modelRef::$information ?? '';
         
         return view('admin/browse',  [
-            'modelRef'            => $modelRef,
-            'tableName'           => $table,
-            'tableAlias'          => $modelRef::$alias ?? self::PrettifyFieldName($table, true),
-            'tableFields'         => $tableFields,
-            'collection'          => $collection,
-            'joinFields'          => $joinFields,
-            'selectFieldData'     => $selectFieldData,
-            'methodFields'        => $methodFields,
-            'displayAsHTMLFields' => $displayAsHTMLFields,
-            'information'         => $information
+            'modelRef'             => $modelRef,
+            'tableName'            => $table,
+            'tableAlias'           => $modelRef::$alias ?? self::PrettifyFieldName($table, true),
+            'tableFields'          => $tableFields,
+            'collection'           => $collection,
+            'joinFields'           => $joinFields,
+            'selectFieldData'      => $selectFieldData,
+            'methodFields'         => $methodFields,
+            'displayAsHTMLFields'  => $displayAsHTMLFields,
+            'displayAsImageFields' => $displayAsImageFields,
+            'information'          => $information
         ]);
     }
 

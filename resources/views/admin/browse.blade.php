@@ -102,14 +102,17 @@
                                     @php $fieldHTML = $item->$fieldKey; @endphp
                                 @endif
 
+
                                 @if(in_array($fieldAlias, $displayAsHTMLFields))
                                     <td class="align-middle">{!! $fieldHTML !!}</td>
+                                @elseif(in_array($fieldKey, array_keys($displayAsImageFields)))
+                                    <td class="align-middle" style="width: 18%;"><img src='{{ $displayAsImageFields[$fieldKey].'/'.$fieldHTML }}' class='w-100'></td>
                                 @else
-                                    <td class="align-middle">{{ $fieldHTML }}</td>
+                                    <td class="align-middle">{{ \Illuminate\Support\Str::limit($fieldHTML, 40) }}</td>
                                 @endif
                             @endforeach
                         
-                            <td class="text-right">
+                            <td class="align-middle text-right" style="white-space: nowrap;">
                                 {{-- View --}}
                                 @if(method_exists($item, 'getFrontendURL'))
                                     <a href="{{ $item->getFrontendURL() }}" target="_blank" type="button" class="btn btn-sm btn-success mx-1"><span class="pr-1 fa fa-eye"></span> View</a>

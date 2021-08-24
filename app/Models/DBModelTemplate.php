@@ -53,6 +53,9 @@ class DBModelTemplate extends Model
     // An array of fields which are allowed to be displayed as HTML when browsing
     public static $displayAsHTMLFields = [];
 
+    // An array of fields which should display as an <img /> element
+    public static $displayAsImageFields = [];
+
     // HTML text information to be displayed for this model at the top of the browsing page
     public static $information = '';
     
