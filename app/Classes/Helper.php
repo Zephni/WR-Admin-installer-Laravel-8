@@ -1,7 +1,8 @@
 <?php
     namespace App\Classes;
 
-    use Carbon\Carbon;
+use App\Models\Config;
+use Carbon\Carbon;
 
     class Helper
     {
@@ -67,7 +68,26 @@
             return $finalURL;
         }
         
-        /* CONFIG
+        public static function getDBConfig($key)
+        {
+            return Config::where('_key', $key)->first()->_value;
+        }
+
+        public static function setDBConfig($key, $value)
+        {
+            $config = Config::where('_key', $key)->first();
+
+            if($config == null)
+            {
+                $config = new Config();
+                $config->_key = $key;
+            }
+
+            $config->_value = $value;
+            return $config->save();
+        }
+
+        /* HARDCODED CONFIG
         -----------------------------------*/
         private static $config = [];
 

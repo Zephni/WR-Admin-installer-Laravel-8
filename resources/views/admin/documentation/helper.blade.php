@@ -44,6 +44,14 @@ file, meaning any keys can be pulled from it as many times as needed without une
 #### Helpful methods
 -------------
 
+Get a config value from the database.
+
+<kbd>Helper::getDBConfig('CONFIG_KEY')</kbd>
+
+Set a config value in the database. This will create a new config row if the key does not exist.
+
+<kbd>Helper::setDBConfig('CONFIG_KEY', 'some value')</kbd>
+
 Properize a word: Turn a name like "Alan" into "Alan's". If the word already ends in an "s" then nothing will change as expected.
 
 <kbd>Helper::properize('Alan')</kbd>
