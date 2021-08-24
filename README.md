@@ -19,15 +19,15 @@ Or you can do each step 1 at a time
     npm run dev
 
 ----------------------------------
-#### 2. Create a database, and setup .env with connection details
-
-Create a database locally or on a server and modify the route .env file with the new connection details.
-
-----------------------------------
-#### 3. Copy premade content
+#### 2. Copy premade content
 
  - Copy everything from this directory other than this README.md file into the new Laravel site route.
  - Delete '/resources/views/dashboard.blade.php'
+
+----------------------------------
+#### 3. Create a database, and setup .env with connection details
+
+Create a database locally or on a server and modify the route .env file with the new connection details.
 
 ----------------------------------
 #### 4. Migrate database
@@ -89,4 +89,4 @@ NOTE: All of this can be done just before deployment, but may aswell do straight
   - Make migrations for new tables
   - Copy the DBModelTemplate.php Model and modify for created tables
   - Edit AdminController.php and set up the navigation
-  - Read the built in documentation for detailed help
+  - Read the built in documentation at /admin/documentation for detailed help
