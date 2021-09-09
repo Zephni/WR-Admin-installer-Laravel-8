@@ -15,7 +15,7 @@
 
 <h1>{{ $heading ?? 'Documentation' }}</h1>
 @if($subject != '')
-    <a href='/admin/documentation'><i class="fas fa-book mr-1"></i> index</a>
+    <a href='{{ route('admin-documentation') }}'><i class="fas fa-book mr-1"></i> index</a>
     / {{ $subject }}
 @endif
 <hr>

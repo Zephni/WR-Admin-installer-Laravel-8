@@ -24,37 +24,39 @@
 
             $('.command-output').hide();
             
-            $(".commands-content .command-trigger").on('click', function(){
-                var thisObj = this;
+            $(".command-form").on('submit', function(e){
+                e.preventDefault();
+                
+                var commandTriggerObject = $(this).find('.command-trigger');
 
                 if(busyWorking)
                 {
                     return;
                 }
 
-                setBusyWorking(true, thisObj);
+                setBusyWorking(true, commandTriggerObject);
                 
-                var commandToRun = $(this).attr('data');
+                var postData = Object.fromEntries(new FormData(e.target).entries());
+                commandToRun = postData['command'];
 
                 $.ajax({
-                    type: 'POST',
-                    url: '{{ route("admin-command-run") }}',//'/admin/command-run',
+                    type: "POST",
+                    url: '{{ route("admin") }}/command-run',
                     cache: false,
-                    data: {
-                        '_token': $('meta[name="csrf-token"]').attr('content'),
-                        'command':commandToRun
-                    },
+                    data: postData,
                     success: function(data){
                         var finalHTML = data;
                         $('.'+commandToRun.replace(':', '')+'-command-output').fadeIn().css({'background':'#E7E7E7', 'color': 'black'}).html(finalHTML);
-                        setBusyWorking(false, thisObj);
+                        setBusyWorking(false, commandTriggerObject);
                     },
                     error: function(data){
                         var finalHTML = data.responseText;
                         $('.'+commandToRun.replace(':', '')+'-command-output').fadeIn().css({'background':'#FF6699', 'color':'black'}).html(finalHTML);
-                        setBusyWorking(false, thisObj);
+                        setBusyWorking(false, commandTriggerObject);
                     }
                 });
+                
+                return false;
             });
         });
     </script>
@@ -65,10 +67,16 @@
 
     <div class="commands-content">
         @foreach ($commands as $command => $description)
-            <p>
+            <p class="d-inline pr-1">
                 <kbd class="command">{{ $command }}</kbd>
-                <button class="btn btn-sm btn-primary command-trigger" data="{{ $command }}">Run command</button>
             </p>
+
+            <form class="command-form d-inline" action="#" method="post">
+                @csrf
+                <input type="hidden" name="command" value="{{ $command }}">
+                <button class="btn btn-sm btn-primary command-trigger">Run command</button>
+            </form>
+        
             <p>{{ $description }}</p>
             <div style="background: #E7E7E7; font-size: 1rem; white-space: nowrap; overflow: auto; font-family: 'Courier New', monospace;" class="command-output p-3 {{ Str::replace(':', '', $command) }}-command-output">
                 
