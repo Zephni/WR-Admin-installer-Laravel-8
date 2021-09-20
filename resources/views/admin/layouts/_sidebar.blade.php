@@ -1,5 +1,5 @@
 <div class="sidebar-brand">
-    <a href="#">{{ config('app.name') }}</a>
+    <a href="/">{{ config('app.name') }}</a>
     <div id="close-sidebar">
         <i class="fas fa-times"></i>
     </div>
