@@ -292,7 +292,7 @@ class AdminController extends Controller
                 if(!isset($modelRef::$tableFieldsEdit[$k]['path']))
                     die('Image "path" not set in Model $modelRef::$tableFieldsEdit');
 
-                $v = $this->imageUpload($request, 'ufield_image', $modelRef::$tableFieldsEdit[$k]['path']);
+                $v = $this->imageUpload($request, 'ufield_'.$k, $modelRef::$tableFieldsEdit[$k]['path']);
             }
 
             $newInstance->$k = $v;
@@ -384,7 +384,7 @@ class AdminController extends Controller
                     if(!isset($modelRef::$tableFieldsEdit[$k]['path']))
                         die('Image "path" not set in Model $modelRef::$tableFieldsEdit');
 
-                    $v = $this->imageUpload($request, 'ufield_image', $modelRef::$tableFieldsEdit[$k]['path']);
+                    $v = $this->imageUpload($request, 'ufield_'.$k, $modelRef::$tableFieldsEdit[$k]['path']);
                     $removeOldImage = public_path('images/'.$modelRef::$tableFieldsEdit[$k]['path'].'/'.$editInstance->$k);
                     
                     if(is_file($removeOldImage))
@@ -524,9 +524,11 @@ class AdminController extends Controller
                 if($request->hasFile('ufield_'.$k))
                 {
                     if(!isset(User::$userFieldsEdit[$k]['path']))
+                    {
                         die('Image "path" not set in Model $modelRef::$userFieldsEdit');
+                    }
 
-                    $v = $this->imageUpload($request, 'ufield_image', User::$userFieldsEdit[$k]['path'], 'u'.$id.'_');
+                    $v = $this->imageUpload($request, 'ufield_'.$k, User::$userFieldsEdit[$k]['path'], 'u'.$id.'_');
 
                     $removeOldImage = public_path('images/'.User::$userFieldsEdit[$k]['path'].'/'.$editInstance->$k);
                     if(is_file($removeOldImage))
