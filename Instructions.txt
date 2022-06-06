@@ -1,0 +1,16 @@
+[1.] Copy this entire directory, rename it to new site name
+
+[2.] Update /laravel-application/.env with correct info
+ 2a. NOTE: We need to TRIPPLE check that the DB connection details are correct in .env before continuing
+
+[3.] Migrate database: php artisan migrate
+
+[4.] Create admin user with:
+ 3a. php artisan tinker
+ 3b. function createUser($name, $email, $password, $isAdmin = false){$user = new App\Models\User();$user->name = $name;$user->email = $email;$user->password = Hash::make($password);$user->is_admin = (!$isAdmin) ? 0 : 1;return $user->save();}
+ 3c. createUser('NAME', 'EMAIL_ADDRESS', 'PASSWORD', 1);
+
+[5.] Whats next? [Each optional.. technically]
+ 5a. Setup git: git init && git add -A && git commit -m "Initialised laravel 8 with WR Admin installation"
+ 5b. Rename ".gitignore-renameme" to ".gitignore"
+ 5c. You can login by heading to /admin or /login [It is recommended to change the "admin" prefix route in web.php]
