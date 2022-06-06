@@ -5,8 +5,8 @@
     </div>
 </div>
 <div class="sidebar-header">
-    <div class="user-pic square-image-container ">
-        <img class="image-preview cover-fit-center img-responsive img-rounded"
+    <div class="user-pic">
+        <img class="image-preview img-responsive img-rounded"
             src="{{ Auth::user()->getProfileImage(true) }}"
             alt="User picture">
     </div>

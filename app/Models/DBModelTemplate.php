@@ -70,7 +70,7 @@ class DBModelTemplate extends Model
         //'author'        => ['type' => 'select',  'options' => 'join Author name'],
         //'title'         => ['type' => 'text', 'validation' => 'required|between:5,70', 'help' => 'Title should be between 5 and 70 characters'],
         //'content'       => ['type' => 'wysiwyg'],
-        //'image'         => ['type' => 'image', 'previewType' => 'landscape', 'path' => 'news', 'validation' => 'required|image|mimes:jpeg,jpg|max:256', 'help' => 'Image should be a valid JPG, 700 x 400 in size, no larger than 256kb' /*, 'alert' => '<b>New!</b> Please make sure to save images as jpg\'s from now on before uploading <i class="fas fa-thumbs-up"></i>'*/],
+        //'image'         => ['type' => 'image', 'previewType' => 'varied', 'path' => 'news', 'validation' => 'required|image|mimes:jpeg,jpg|max:256', 'help' => 'Expected size: 700 x 400, no larger than 1024kb'],
         //'-html'         => '<hr /><h2>Some example HTML</h2>',
         //'tags'          => ['type' => 'tags'],
         //'publish_date'  => ['type' => 'datetime'],
